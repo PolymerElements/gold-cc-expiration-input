@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
 <link rel="import" href="date-validator.html">
 
 <dom-module id="date-input">
@@ -30,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </style>
 
   <template>
-    <date-validator></date-validator>
+    <date-validator id="validator"></date-validator>
 
     <div class="horizontal layout">
       <input is="iron-input"
@@ -38,6 +39,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           maxlength="2"
           bind-value="{{month}}"
           placeholder="MM"
+          allowed-pattern="[0-9]"
+          prevent-invalid-input
           class="flex">
       <span>/</span>
       <input is="iron-input"
@@ -45,6 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           maxlength="2"
           bind-value="{{year}}"
           placeholder="YY"
+          allowed-pattern="[0-9]"
+          prevent-invalid-input
           class="flex">
     </div>
   </template>
@@ -107,7 +112,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // Months are 0-11.
       this.date = {month: month, year: year};
       this.fire('dateChanged', this.date);
-    }
+    },
+
+    validate:function () {
+      this.invalid = !this.$.validator.validate(this.date);
+      this.fire('iron-input-validate');
+      return !this.invalid;
+    },
 
   })
 })();
