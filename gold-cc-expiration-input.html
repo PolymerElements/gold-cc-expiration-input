@@ -47,14 +47,14 @@ Example:
         <label>[[label]]</label>
       </template>
 
-      <date-input class="paper-input-input"
+      <date-input class="paper-input-input" id="input"
           required$="[[required]]"
           month="[[_computeMonth(value)]]"
           year="[[_computeYear(value)]]">
       </date-input>
 
       <template is="dom-if" if="[[errorMessage]]">
-        <paper-input-error id="error">[[errorMessage]]</paper-input-error>
+        <paper-input-error>[[errorMessage]]</paper-input-error>
       </template>
 
     </paper-input-container>
