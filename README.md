@@ -4,5 +4,7 @@
 future date representing a credit card's expiration date.
 Example:
 
-    <gold-cc-expiration-input></gold-cc-expiration-input>
-    <gold-cc-expiration-input value="11/15"></gold-cc-expiration-input>
+```html
+<gold-cc-expiration-input></gold-cc-expiration-input>
+<gold-cc-expiration-input value="11/15"></gold-cc-expiration-input>
+```
