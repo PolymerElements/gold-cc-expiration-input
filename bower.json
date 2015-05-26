@@ -7,8 +7,9 @@
   ],
   "keywords": [
     "web-components",
-    "web-component",
-    "polymer"
+    "polymer",
+    "gold",
+    "input"
   ],
   "main": [
     "gold-cc-expiration-input.html"
