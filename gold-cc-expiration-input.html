@@ -65,11 +65,10 @@ style this element.
         auto-validate="[[autoValidate]]"
         attr-for-value="date">
 
-      <template is="dom-if" if="[[label]]">
-        <label>[[label]]</label>
-      </template>
+      <label hidden$="[[!label]]">[[label]]</label>
 
       <date-input class="paper-input-input" id="input"
+          aria-label-prefix="[[_ariaLabelledBy]]"
           required$="[[required]]"
           month="[[_computeMonth(value)]]"
           year="[[_computeYear(value)]]"

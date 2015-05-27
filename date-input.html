@@ -34,8 +34,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <date-validator id="validator"></date-validator>
 
+    <span aria-hidden id="monthLabel" hidden>Month</span>
+    <span aria-hidden id="yearLabel" hidden>Year</span>
+
     <div class="horizontal layout">
       <input is="iron-input"
+          aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'monthLabel')]]"
           required$="[[required]]"
           maxlength="2"
           bind-value="{{month}}"
@@ -46,6 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           class="flex">
       <span>/</span>
       <input is="iron-input"
+          aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'yearLabel')]]"
           required$="[[required]]"
           maxlength="2"
           bind-value="{{year}}"
@@ -104,7 +109,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       validator: {
         type: String,
         value: 'date-validator'
+      },
+
+      ariaLabelPrefix: {
+        type:String
       }
+
     },
 
     observers: [
@@ -126,6 +136,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.fire('iron-input-validate');
       return !this.invalid;
     },
+
+    _computeAriaLabel(dateLabel, monthLabel) {
+      return dateLabel + ' ' + monthLabel;
+    }
 
   })
 })();
