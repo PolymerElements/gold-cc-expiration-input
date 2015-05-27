@@ -52,7 +52,8 @@ Example:
       <date-input class="paper-input-input" id="input"
           required$="[[required]]"
           month="[[_computeMonth(value)]]"
-          year="[[_computeYear(value)]]">
+          year="[[_computeYear(value)]]"
+          autocomplete$="[[autocomplete]]">
       </date-input>
 
       <template is="dom-if" if="[[errorMessage]]">
