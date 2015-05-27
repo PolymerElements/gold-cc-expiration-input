@@ -115,6 +115,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     validate:function () {
+      // Empty, non-required input is valid.
+      if (!this.required && this.month == '' && this.year == '') {
+        return true;
+      }
       this.invalid = !this.$.validator.validate(this.date);
       this.fire('iron-input-validate');
       return !this.invalid;
