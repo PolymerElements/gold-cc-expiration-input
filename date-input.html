@@ -20,13 +20,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: inline-block;
     }
 
-    input[is="iron-input"], span {
-      text-align: center;
-    }
-
     span {
       @apply(--paper-input-container-font);
       opacity: 0.33;
+      text-align: center;
+    }
+
+    input {
+      position: relative; /* to make a stacking context */
+      outline: none;
+      box-shadow: none;
+      padding: 0;
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--paper-input-container-input-color, --primary-text-color);
+      text-align: center;
+
+      @apply(--paper-font-subhead);
+      @apply(--paper-input-container-input);
     }
 
   </style>
