@@ -22,6 +22,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ],
 
     validate: function(date) {
+      if (!date)
+        return false;
+        
       if (date.month > 11 || date.month < 0)
         return false;
 
