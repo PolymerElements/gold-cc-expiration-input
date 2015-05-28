@@ -65,8 +65,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 
 <script>
-(function() {
-
   Polymer({
 
     is: 'date-input',
@@ -127,7 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.fire('dateChanged', this.date);
     },
 
-    validate:function () {
+    validate: function() {
       // Empty, non-required input is valid.
       if (!this.required && this.month == '' && this.year == '') {
         return true;
@@ -137,10 +135,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return !this.invalid;
     },
 
-    _computeAriaLabel(dateLabel, monthLabel) {
+    _computeAriaLabel: function(dateLabel, monthLabel) {
       return dateLabel + ' ' + monthLabel;
     }
 
-  })
-})();
+  });
 </script>
