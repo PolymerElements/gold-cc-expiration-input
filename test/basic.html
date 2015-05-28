@@ -99,6 +99,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     });
 
+    suite('a11y', function() {
+
+      test('has aria-labelledby', function() {
+        var input = fixture('basic');
+        var month = input.querySelectorAll('input')[0];
+        var year = input.querySelectorAll('input')[1];
+        var label = Polymer.dom(input.root).querySelector('label').id;
+
+        assert.ok(month);
+        assert.ok(year);
+
+        assert.isTrue(month.hasAttribute('aria-labelledby'));
+        assert.isTrue(year.hasAttribute('aria-labelledby'));
+
+        assert.equal(month.getAttribute('aria-labelledby'), label + ' monthLabel');
+        assert.equal(year.getAttribute('aria-labelledby'), label + ' yearLabel');
+      });
+
+    });
+
+
   </script>
 
 </body>
