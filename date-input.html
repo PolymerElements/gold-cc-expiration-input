@@ -60,7 +60,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           prevent-invalid-input
           autocomplete="cc-exp-month"
           type="tel"
-          class="flex">
+          class="flex"
+          disabled$="[[disabled]]"
+          invalid="{{invalid}}"
+          autofocus$="[[autofocus]]"
+          inputmode$="[[inputmode]]"
+          placeholder$="[[placeholder]]"
+          readonly$="[[readonly]]">
       <span>/</span>
       <input is="iron-input"
           aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'yearLabel')]]"
@@ -72,7 +78,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           prevent-invalid-input
           autocomplete="cc-exp-year"
           type="tel"
-          class="flex">
+          class="flex"
+          disabled$="[[disabled]]"
+          invalid="{{invalid}}"
+          autofocus$="[[autofocus]]"
+          inputmode$="[[inputmode]]"
+          placeholder$="[[placeholder]]"
+          readonly$="[[readonly]]">
     </div>
   </template>
 
