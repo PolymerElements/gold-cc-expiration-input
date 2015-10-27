@@ -11,9 +11,7 @@
     "gold",
     "input"
   ],
-  "main": [
-    "gold-cc-expiration-input.html"
-  ],
+  "main": "gold-cc-expiration-input.html",
   "private": true,
   "repository": {
     "type": "git",
