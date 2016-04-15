@@ -60,7 +60,8 @@ style this element.
     </style>
 
     <paper-input-container id="container"
-        always-float-label
+        no-label-float="[[noLabelFloat]]"
+        always-float-label="[[alwaysFloatLabel]]"
         attr-for-value="date"
         disabled$="[[disabled]]"
         invalid="[[invalid]]">
@@ -94,6 +95,11 @@ style this element.
       Polymer({
 
         is: 'gold-cc-expiration-input',
+
+        /* The underlying dateInput is tabbable */
+        hostAttributes: {
+          'tabindex': -1
+        },
 
         behaviors: [
           Polymer.PaperInputBehavior,
