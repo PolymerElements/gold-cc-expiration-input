@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="date-validator.html">
 
 <dom-module id="date-input">
-
+  <template>
   <style>
     span {
       @apply(--paper-input-container-font);
@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       text-align: center;
     }
 
-    input {
+    input[is="iron-input"] {
       position: relative; /* to make a stacking context */
       outline: none;
       box-shadow: none;
@@ -45,10 +45,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .container {
       @apply(--layout-horizontal);
     }
-
   </style>
 
-  <template>
     <date-validator id="validator"></date-validator>
 
     <span aria-hidden id="monthLabel" hidden>Month</span>
@@ -85,7 +83,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type="tel"
           disabled$="[[disabled]]"
           invalid="{{invalid}}"
-          autofocus$="[[autofocus]]"
           inputmode$="[[inputmode]]"
           readonly$="[[readonly]]">
     </div>
@@ -171,6 +168,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _computeAriaLabel: function(dateLabel, monthLabel) {
       return dateLabel + ' ' + monthLabel;
     }
-
   });
 </script>
