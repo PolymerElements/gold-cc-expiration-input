@@ -56,6 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="container">
       <input is="iron-input"
+          id="expirationMonth"
           aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'monthLabel')]]"
           required$="[[required]]"
           maxlength="2"
@@ -69,7 +70,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           invalid="{{invalid}}"
           autofocus$="[[autofocus]]"
           inputmode$="[[inputmode]]"
-          placeholder$="[[placeholder]]"
           readonly$="[[readonly]]">
       <span>/</span>
       <input is="iron-input"
@@ -87,7 +87,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           invalid="{{invalid}}"
           autofocus$="[[autofocus]]"
           inputmode$="[[inputmode]]"
-          placeholder$="[[placeholder]]"
           readonly$="[[readonly]]">
     </div>
   </template>
