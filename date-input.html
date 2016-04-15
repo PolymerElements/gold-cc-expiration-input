@@ -19,33 +19,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="date-input">
   <template>
-  <style>
-    span {
-      @apply(--paper-input-container-font);
-      opacity: 0.33;
-      text-align: center;
-    }
+    <style>
+      span {
+        @apply(--paper-input-container-font);
+        opacity: 0.33;
+        text-align: center;
+      }
 
-    input[is="iron-input"] {
-      position: relative; /* to make a stacking context */
-      outline: none;
-      box-shadow: none;
-      padding: 0;
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: var(--paper-input-container-input-color, --primary-text-color);
-      text-align: center;
+      input[is="iron-input"] {
+        position: relative; /* to make a stacking context */
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--paper-input-container-input-color, --primary-text-color);
+        text-align: center;
 
-      @apply(--layout-flex);
-      @apply(--paper-font-subhead);
-      @apply(--paper-input-container-input);
-    }
+        @apply(--layout-flex);
+        @apply(--paper-font-subhead);
+        @apply(--paper-input-container-input);
+      }
 
-    .container {
-      @apply(--layout-horizontal);
-    }
-  </style>
+      .container {
+        @apply(--layout-horizontal);
+      }
+    </style>
 
     <date-validator id="validator"></date-validator>
 
