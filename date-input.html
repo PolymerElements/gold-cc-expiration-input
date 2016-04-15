@@ -137,8 +137,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ariaLabelPrefix: {
         type:String
-      }
+      },
 
+      /**
+       * Set to true to disable the month and year input elements.
+       */
+      disabled: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to autofocus the month input element.
+       */
+      autofocus: {
+        type: Boolean
+      },
+
+      /**
+       * Bound to the month and year input elements' `inputmode` property.
+       */
+      inputmode: {
+        type: String
+      },
+
+      /**
+       * Set to true to mark the month and year inputs as not editable.
+       */
+      readonly: {
+        type: Boolean,
+        value: false
+      }
     },
 
     observers: [
