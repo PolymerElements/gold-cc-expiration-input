@@ -66,9 +66,11 @@ style this element.
         disabled$="[[disabled]]"
         invalid="[[invalid]]">
 
-      <label hidden$="[[!label]]">[[label]]</label>
+      <label slot="label" hidden$="[[!label]]">[[label]]</label>
 
-      <date-input class="paper-input-input" id="input"
+      <date-input class="paper-input-input"
+          id="input"
+          slot="input"
           aria-label-prefix="[[_ariaLabelledBy]]"
           required$="[[required]]"
           autocomplete$="[[autocomplete]]"
@@ -81,7 +83,9 @@ style this element.
       </date-input>
 
       <template is="dom-if" if="[[errorMessage]]">
-        <paper-input-error>[[errorMessage]]</paper-input-error>
+        <paper-input-error slot="add-on" id="error">
+          [[errorMessage]]
+        </paper-input-error>
       </template>
 
     </paper-input-container>
@@ -110,7 +114,7 @@ style this element.
            */
           label: {
             type: String,
-            value: "Expiration Date"
+            value: 'Expiration Date'
           },
 
           value: {
@@ -118,6 +122,7 @@ style this element.
             value: '',
             observer: '_onValueChanged'
           }
+
         },
 
         listeners: {
@@ -130,8 +135,17 @@ style this element.
 
         ready: function() {
           // If there's an initial input, validate it.
-          if (this.value)
+          if (this.value) {
             this._handleAutoValidate();
+          }
+        },
+
+        created() {
+          // Polymer 2 propagates `autoValidate` earlier in the lifecycle than
+          // in Polymer 1
+          if (Polymer.Element) {
+            this.__ignoreAutoValidation = true;
+          }
         },
 
         /**
@@ -139,8 +153,9 @@ style this element.
          */
         _onValueChanged: function(value, oldValue) {
           // The initial property assignment is handled by `ready`.
-          if (oldValue == undefined)
+          if (oldValue == undefined) {
             return;
+          }
 
           this.$.input.month = this._computeMonth(value);
           this.$.input.year = this._computeYear(value);
@@ -176,15 +191,16 @@ style this element.
          * Overidden from Polymer.IronControlState.
          */
         _onFocusedChanged: function(focused) {
+          if (this.__ignoreAutoValidation) {
+            this.__ignoreAutoValidation = false;
+            return;
+          }
+
           if (!focused) {
             this._handleAutoValidate();
           }
         }
-          
-      })
-
+      });
     })();
-
   </script>
-
 </dom-module>
