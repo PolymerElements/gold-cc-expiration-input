@@ -125,8 +125,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = fixture('basic');
         forceXIfStamp(input);
         var dateInput = Polymer.dom(input.root).querySelector('date-input');
-        var month = Polymer.dom(dateInput.root).querySelector('#expirationMonth');
-        var year = Polymer.dom(dateInput.root).querySelector('#expirationYear');
+        var month = dateInput.$.nativeMonthInput || dateInput.$.expirationMonth;
+        var year = dateInput.$.nativeYearInput || dateInput.$.expirationYear;
         assert.equal(month.placeholder, 'MM', 'month placeholder is MM');
         assert.equal(year.placeholder, 'YY', 'year placeholder is YY');
       });
@@ -135,7 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = fixture('basic');
         forceXIfStamp(input);
         var dateInput = Polymer.dom(input.root).querySelector('date-input');
-        var year = Polymer.dom(dateInput.root).querySelector('#expirationYear');
+        var year = dateInput.$.nativeYearInput || dateInput.$.expirationYear;
         MockInteractions.pressAndReleaseKeyOn(dateInput, 191, [], '/');
         assert.equal(Polymer.dom(dateInput.root).activeElement, year, 'year is focused');
       });
@@ -143,12 +143,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     suite('a11y', function() {
-
       test('has aria-labelledby', function() {
         var input = fixture('basic');
         var dateInput = input.$$('.paper-input-input');
-        var month = dateInput.$$('input:nth-of-type(1)');
-        var year = dateInput.$$('input:nth-of-type(2)');
+        var month = dateInput.$.nativeMonthInput || dateInput.$.expirationMonth;
+        var year = dateInput.$.nativeYearInput || dateInput.$.expirationYear;
         var label = Polymer.dom(input.root).querySelector('label').id;
 
         assert.ok(month);
@@ -160,7 +159,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(month.getAttribute('aria-labelledby'), label + ' monthLabel');
         assert.equal(year.getAttribute('aria-labelledby'), label + ' yearLabel');
       });
-
     });
 
 
