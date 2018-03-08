@@ -1,0 +1,10 @@
+{
+  "name": "@polymer/gold-cc-expiration-input",
+  "private": true,
+  "description": "A validating input for a credit card expiration date",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/gold-cc-expiration-input.git"
+  },
+  "license": "BSD-3-Clause"
+}
