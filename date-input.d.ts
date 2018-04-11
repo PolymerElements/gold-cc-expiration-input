@@ -38,7 +38,8 @@ interface DateInputElement extends Polymer.Element, Polymer.IronA11yKeysBehavior
   year: string|null|undefined;
 
   /**
-   * The date object used by the validator. Has two properties, month and year.
+   * The date object used by the validator. Has two properties, month and
+   * year.
    */
   date: object|null|undefined;
   ariaLabelPrefix: string|null|undefined;

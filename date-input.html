@@ -139,94 +139,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     is: 'date-input',
 
-    behaviors: [
-      Polymer.IronA11yKeysBehavior,
-      Polymer.IronValidatableBehavior
-    ],
+    behaviors: [Polymer.IronA11yKeysBehavior, Polymer.IronValidatableBehavior],
 
     properties: {
       /**
        * Set to true to mark the input as required.
        */
-      required: {
-        type: Boolean,
-        value: false
-      },
+      required: {type: Boolean, value: false},
 
       /**
        * The month component of the date displayed.
        */
-      month: {
-        type: String,
-        value: ''
-      },
+      month: {type: String, value: ''},
 
       /**
        * The year component of the date displayed.
        */
-      year: {
-        type: String,
-        value: ''
-      },
+      year: {type: String, value: ''},
 
       /**
-       * The date object used by the validator. Has two properties, month and year.
+       * The date object used by the validator. Has two properties, month and
+       * year.
        */
-      date: {
-        notify: true,
-        type: Object
-      },
+      date: {notify: true, type: Object},
 
-      validator: {
-        type: String,
-        value: 'date-validator'
-      },
+      validator: {type: String, value: 'date-validator'},
 
-      ariaLabelPrefix: {
-        type:String
-      },
+      ariaLabelPrefix: {type: String},
 
       /**
        * Set to true to disable the month and year input elements.
        */
-      disabled: {
-        type: Boolean,
-        value: false
-      },
+      disabled: {type: Boolean, value: false},
 
       /**
        * Set to true to autofocus the month input element.
        */
-      autofocus: {
-        type: Boolean
-      },
+      autofocus: {type: Boolean},
 
       /**
        * Bound to the month and year input elements' `inputmode` property.
        */
-      inputmode: {
-        type: String
-      },
+      inputmode: {type: String},
 
       /**
        * Set to true to mark the month and year inputs as not editable.
        */
-      readonly: {
-        type: Boolean,
-        value: false
-      }
+      readonly: {type: Boolean, value: false}
     },
 
     /**
      * @type {!Object}
      */
-    keyBindings: {
-      '/': '_selectYear'
-    },
+    keyBindings: {'/': '_selectYear'},
 
-    observers: [
-      '_computeDate(month, year)'
-    ],
+    observers: ['_computeDate(month, year)'],
 
     beforeRegister: function() {
       // We need to tell which kind of of template to stamp based on
@@ -235,21 +202,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // to check a particular method we know the iron-input#2.x can have.
       // If it doesn't have it, then it's an iron-input#1.x.
       var ironInput = document.createElement('iron-input');
-      var version = typeof ironInput._initSlottedInput == 'function' ? 'v1' : 'v0';
+      var version =
+          typeof ironInput._initSlottedInput == 'function' ? 'v1' : 'v0';
       var template = Polymer.DomModule.import('date-input', 'template');
-      var inputTemplate = Polymer.DomModule.import('date-input', 'template#' + version);
-      var inputPlaceholder = template.content.querySelector('#template-placeholder');
+      var inputTemplate =
+          Polymer.DomModule.import('date-input', 'template#' + version);
+      var inputPlaceholder =
+          template.content.querySelector('#template-placeholder');
       if (inputPlaceholder) {
-        inputPlaceholder.parentNode.replaceChild(inputTemplate.content, inputPlaceholder);
+        inputPlaceholder.parentNode.replaceChild(
+            inputTemplate.content, inputPlaceholder);
       }
       // else it's already been processed, probably in superclass
     },
 
     created: function() {
-      // Polymer 2 does not call _computeDate observer before paper-input-container
-      // calls _handleValue in the parent's connectedCallback unlike in Polymer 1
+      // Polymer 2 does not call _computeDate observer before
+      // paper-input-container calls _handleValue in the parent's
+      // connectedCallback unlike in Polymer 1
       if (Polymer.Element) {
-        this._computeDate('','');
+        this._computeDate('', '');
       }
     },
 
