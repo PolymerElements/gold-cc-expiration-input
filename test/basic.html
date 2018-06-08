@@ -40,7 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var input;
 
       setup(function(done) {
-        // this check is for IE where v2 iron-input is not ready before tests start due to the asynchronous set of iron-input.inputElement
+        // this check is for IE where v2 iron-input is not ready before tests start
+        // due to the asynchronous set of iron-input.inputElement
         input = fixture('basic');
 
         // select both iron inputs
@@ -70,8 +71,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // exit setup check
         function checkSetup() {
           if (monthInputReady && yearInputReady) {
-            monthIronInput.removeEventListener('iron-input-ready', onMonthIronInputReady);
-            yearIronInput.removeEventListener('iron-input-ready', onYearIronInputReady);
+            monthIronInput.removeEventListener(
+                'iron-input-ready', onMonthIronInputReady);
+            yearIronInput.removeEventListener(
+                'iron-input-ready', onYearIronInputReady);
             done();
           }
         }
@@ -81,7 +84,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // wait for iron-input to be ready
         if (!monthInputReady) {
-          monthIronInput.addEventListener('iron-input-ready', onMonthIronInputReady);
+          monthIronInput.addEventListener(
+              'iron-input-ready', onMonthIronInputReady);
         }
 
         if (!yearInputReady) {
