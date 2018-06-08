@@ -48,6 +48,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var monthIronInput = input.$.input.$.expirationMonth;
         var yearIronInput = input.$.input.$.expirationYear;
         var isV0 = monthIronInput instanceof HTMLInputElement;
+        // this is not an issue with v0 iron-input which is synchronous
+        if (isV0) {
+          done();
+        }
 
         // check if inputElement is defined by this point hence ready
         var monthInputReady = !!monthIronInput.inputElement;
@@ -61,11 +65,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         function onYearIronInputReady() {
           yearInputReady = true;
           checkSetup();
-        }
-
-        // this is not an issue with v0 iron-input which is synchronous
-        if (isV0) {
-          done();
         }
 
         // exit setup check
