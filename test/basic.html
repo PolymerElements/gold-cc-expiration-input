@@ -37,8 +37,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     suite('basic', function() {
+      var input;
+
+      setup(function(done) {
+        // this check is for IE where v2 iron-input is not ready before tests start due to the asynchronous set of iron-input.inputElement
+        input = fixture('basic');
+
+        // select both iron inputs
+        var monthIronInput = input.$.input.$.expirationMonth;
+        var yearIronInput = input.$.input.$.expirationYear;
+        var isV0 = monthIronInput instanceof HTMLInputElement;
+
+        // check if inputElement is defined by this point hence ready
+        var monthInputReady = !!monthIronInput.inputElement;
+        var yearInputReady = !!yearIronInput.inputElement;
+
+        function onMonthIronInputReady() {
+          monthInputReady = true;
+          checkSetup();
+        }
+
+        function onYearIronInputReady() {
+          yearInputReady = true;
+          checkSetup();
+        }
+
+        // this is not an issue with v0 iron-input which is synchronous
+        if (isV0) {
+          done();
+        }
+
+        // exit setup check
+        function checkSetup() {
+          if (monthInputReady && yearInputReady) {
+            monthIronInput.removeEventListener('iron-input-ready', onMonthIronInputReady);
+            yearIronInput.removeEventListener('iron-input-ready', onYearIronInputReady);
+            done();
+          }
+        }
+
+        // this will exit if both inputs are ready at load.
+        checkSetup();
+
+        // wait for iron-input to be ready
+        if (!monthInputReady) {
+          monthIronInput.addEventListener('iron-input-ready', onMonthIronInputReady);
+        }
+
+        if (!yearInputReady) {
+          yearIronInput.addEventListener('iron-input-ready', onYearIronInputReady);
+        }
+      });
+
       test('invalid input is not ok', function() {
-        var input = fixture('basic');
         input.value = '1234';
         forceXIfStamp(input);
 
@@ -56,7 +107,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('misformed dates are not ok', function() {
-        var input = fixture('basic');
         input.value = '33/33';
         forceXIfStamp(input);
 
@@ -74,7 +124,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('past dates are not ok', function() {
-        var input = fixture('basic');
         input.value = '11/00';
         forceXIfStamp(input);
 
@@ -92,7 +141,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('future dates are ok', function() {
-        var input = fixture('basic');
         // Note: this test will start failing in 2099. Apologies, future
         // maintainers.
         input.value = '11/99';
@@ -113,14 +161,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('value is updated correctly ', function() {
-        var input = fixture('basic');
         input.$$('.paper-input-input').month = 11;
         input.$$('.paper-input-input').year = 15;
         assert.equal(input.value, '11/15');
       });
 
       test('empty required input shows error on blur', function(done) {
-        var input = fixture('basic');
         forceXIfStamp(input);
 
         var error = Polymer.dom(input.root).querySelector('paper-input-error');
@@ -144,7 +190,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('placeholder shows correctly', function() {
-        var input = fixture('basic');
         forceXIfStamp(input);
         var dateInput = Polymer.dom(input.root).querySelector('date-input');
         var month = dateInput.$.nativeMonthInput || dateInput.$.expirationMonth;
@@ -154,7 +199,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('/ key advances to year input', function() {
-        var input = fixture('basic');
         forceXIfStamp(input);
         var dateInput = Polymer.dom(input.root).querySelector('date-input');
         var year = dateInput.$.nativeYearInput || dateInput.$.expirationYear;
