@@ -1,0 +1,32 @@
+{
+  "files": {
+    "gold-cc-expiration-input.html": {
+      "convertedUrl": "gold-cc-expiration-input.js",
+      "exports": {}
+    },
+    "date-input.html": {
+      "convertedUrl": "date-input.js",
+      "exports": {}
+    },
+    "date-validator.html": {
+      "convertedUrl": "date-validator.js",
+      "exports": {}
+    },
+    "index.html": {
+      "convertedUrl": "index.html",
+      "exports": {}
+    },
+    "demo/index.html": {
+      "convertedUrl": "demo/index.html",
+      "exports": {}
+    },
+    "test/basic.html": {
+      "convertedUrl": "test/basic.html",
+      "exports": {}
+    },
+    "test/index.html": {
+      "convertedUrl": "test/index.html",
+      "exports": {}
+    }
+  }
+}

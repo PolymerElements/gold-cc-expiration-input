@@ -1,0 +1,216 @@
+/**
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+/* This is a fresh new hell to make this element hybrid. Basically, in 2.0
+    we lost is=, so the example same template can't be used with iron-input 1.0 and 2.0.
+    Expect some conditional code (especially in the tests).
+   */
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import '@polymer/polymer/polymer-legacy.js';
+
+import { IronA11yKeysBehavior } from '@polymer/iron-a11y-keys-behavior/iron-a11y-keys-behavior.js';
+import '@polymer/iron-input/iron-input.js';
+import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import { IronValidatableBehavior } from '@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
+import '@polymer/paper-input/paper-input-container.js';
+import '@polymer/paper-styles/default-theme.js';
+import '@polymer/paper-styles/typography.js';
+import './date-validator.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { DomModule } from '@polymer/polymer/lib/elements/dom-module.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+const $_documentContainer = document.createElement('template');
+$_documentContainer.setAttribute('style', 'display: none;');
+
+$_documentContainer.innerHTML = `<dom-module id="date-input">
+  <template>
+    <style>
+      span {
+        @apply --paper-input-container-font;
+        opacity: 0.33;
+        text-align: center;
+      }
+
+      input[is="iron-input"], iron-input input {
+        position: relative; /* to make a stacking context */
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
+        text-align: center;
+
+        @apply --layout-flex;
+        @apply --paper-font-subhead;
+        @apply --paper-input-container-input;
+      }
+
+      .container {
+        @apply --layout-horizontal;
+      }
+    </style>
+
+    <date-validator id="validator"></date-validator>
+
+    <span aria-hidden="" id="monthLabel" hidden="">Month</span>
+    <span aria-hidden="" id="yearLabel" hidden="">Year</span>
+
+    <div class="container">
+      <span id="template-placeholder"></span>
+    </div>
+
+  </template>
+
+  <!-- This is a fresh new hell to make this element hybrid. Basically, in 2.0
+    we lost is=, so the example same template can't be used with iron-input 1.0 and 2.0.
+    Expect some conditional code (especially in the tests).
+   -->
+  <template id="v0">
+    <input is="iron-input" id="expirationMonth" aria-labelledby\$="[[_computeAriaLabel(ariaLabelPrefix,'monthLabel')]]" required\$="[[required]]" maxlength="2" bind-value="{{month}}" placeholder="MM" allowed-pattern="[0-9]" prevent-invalid-input="" autocomplete="cc-exp-month" type="tel" disabled\$="[[disabled]]" invalid="{{invalid}}" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" readonly\$="[[readonly]]">
+    <span>/</span>
+    <input is="iron-input" id="expirationYear" aria-labelledby\$="[[_computeAriaLabel(ariaLabelPrefix,'yearLabel')]]" required\$="[[required]]" maxlength="2" bind-value="{{year}}" placeholder="YY" allowed-pattern="[0-9]" prevent-invalid-input="" autocomplete="cc-exp-year" type="tel" disabled\$="[[disabled]]" invalid="{{invalid}}" inputmode\$="[[inputmode]]" readonly\$="[[readonly]]">
+  </template>
+
+  <template id="v1">
+    <iron-input id="expirationMonth" bind-value="{{month}}" allowed-pattern="[0-9]" invalid="{{invalid}}">
+      <input id="nativeMonthInput" aria-labelledby\$="[[_computeAriaLabel(ariaLabelPrefix,'monthLabel')]]" required\$="[[required]]" maxlength="2" placeholder="MM" autocomplete="cc-exp-month" type="tel" disabled\$="[[disabled]]" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" readonly\$="[[readonly]]">
+    </iron-input>
+    <span>/</span>
+    <iron-input id="expirationYear" bind-value="{{year}}" allowed-pattern="[0-9]" invalid="{{invalid}}">
+      <input id="nativeYearInput" aria-labelledby\$="[[_computeAriaLabel(ariaLabelPrefix,'yearLabel')]]" required\$="[[required]]" maxlength="2" placeholder="YY" autocomplete="cc-exp-year" type="tel" disabled\$="[[disabled]]" inputmode\$="[[inputmode]]" readonly\$="[[readonly]]">
+    </iron-input>
+  </template>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);
+Polymer({
+
+  is: 'date-input',
+
+  behaviors: [IronA11yKeysBehavior, IronValidatableBehavior],
+
+  properties: {
+    /**
+     * Set to true to mark the input as required.
+     */
+    required: {type: Boolean, value: false},
+
+    /**
+     * The month component of the date displayed.
+     */
+    month: {type: String, value: ''},
+
+    /**
+     * The year component of the date displayed.
+     */
+    year: {type: String, value: ''},
+
+    /**
+     * The date object used by the validator. Has two properties, month and
+     * year.
+     */
+    date: {notify: true, type: Object},
+
+    validator: {type: String, value: 'date-validator'},
+
+    ariaLabelPrefix: {type: String},
+
+    /**
+     * Set to true to disable the month and year input elements.
+     */
+    disabled: {type: Boolean, value: false},
+
+    /**
+     * Set to true to autofocus the month input element.
+     */
+    autofocus: {type: Boolean},
+
+    /**
+     * Bound to the month and year input elements' `inputmode` property.
+     */
+    inputmode: {type: String},
+
+    /**
+     * Set to true to mark the month and year inputs as not editable.
+     */
+    readonly: {type: Boolean, value: false}
+  },
+
+  /**
+   * @type {!Object}
+   */
+  keyBindings: {'/': '_selectYear'},
+
+  observers: ['_computeDate(month, year)'],
+
+  beforeRegister: function() {
+    // We need to tell which kind of of template to stamp based on
+    // what kind of `iron-input` we got, but because of polyfills and
+    // custom elements differences between v0 and v1, the safest bet is
+    // to check a particular method we know the iron-input#2.x can have.
+    // If it doesn't have it, then it's an iron-input#1.x.
+    var ironInput = document.createElement('iron-input');
+    var version =
+        typeof ironInput._initSlottedInput == 'function' ? 'v1' : 'v0';
+    var template = DomModule.import('date-input', 'template');
+    var inputTemplate =
+        DomModule.import('date-input', 'template#' + version);
+    var inputPlaceholder =
+        template.content.querySelector('#template-placeholder');
+    if (inputPlaceholder) {
+      inputPlaceholder.parentNode.replaceChild(
+          inputTemplate.content, inputPlaceholder);
+    }
+    // else it's already been processed, probably in superclass
+  },
+
+  created: function() {
+    // Polymer 2 does not call _computeDate observer before
+    // paper-input-container calls _handleValue in the parent's
+    // connectedCallback unlike in Polymer 1
+    if (PolymerElement) {
+      this._computeDate('', '');
+    }
+  },
+
+  _selectYear: function() {
+    var yearInput = this.$.nativeYearInput || this.$.expirationYear;
+    yearInput.focus();
+  },
+
+  _computeDate: function(month, year) {
+    // Months are 0-11.
+    this.date = {month: month, year: year};
+    this.fire('dateChanged', this.date);
+    // Advance cursor to year after month entry
+    if (month && month.length === 2) {
+      this._selectYear();
+    }
+  },
+
+  validate: function() {
+    // Empty, non-required input is valid.
+    if (!this.required && this.month == '' && this.year == '') {
+      return true;
+    }
+    this.invalid = !this.$.validator.validate(this.date);
+    this.fire('iron-input-validate');
+    return !this.invalid;
+  },
+
+  _computeAriaLabel: function(dateLabel, monthLabel) {
+    return dateLabel + ' ' + monthLabel;
+  }
+});
