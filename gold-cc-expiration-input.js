@@ -1,15 +1,27 @@
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+This code may only be used under the BSD style license found at
+http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant
+found at http://polymer.github.io/PATENTS.txt
 */
+import '@polymer/polymer/polymer-legacy.js';
+import '@polymer/paper-input/paper-input-container.js';
+import '@polymer/paper-input/paper-input-error.js';
+import '@polymer/iron-input/iron-input.js';
+import './date-input.js';
+
+import {IronFormElementBehavior} from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
+import {PaperInputBehavior} from '@polymer/paper-input/paper-input-behavior.js';
+import {Polymer} from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+
 /**
-`gold-cc-expiration-input` is a  single-line text field with Material Design styling
-for entering a credit card's expiration date
+`gold-cc-expiration-input` is a  single-line text field with Material Design
+styling for entering a credit card's expiration date
 
     <gold-cc-expiration-input></gold-cc-expiration-input>
     <gold-cc-expiration-input value="11/15"></gold-cc-expiration-input>
@@ -36,27 +48,9 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to
 style this element.
 
 @group Gold Elements
-@hero hero.svg
 @demo demo/index.html
 @class gold-cc-expiration-input
 */
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
-import '@polymer/polymer/polymer-legacy.js';
-
-import { PaperInputBehavior } from '@polymer/paper-input/paper-input-behavior.js';
-import '@polymer/paper-input/paper-input-container.js';
-import '@polymer/paper-input/paper-input-error.js';
-import '@polymer/iron-input/iron-input.js';
-import { IronFormElementBehavior } from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
-import './date-input.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
 Polymer({
   _template: html`
     <style>
@@ -65,11 +59,29 @@ Polymer({
       }
     </style>
 
-    <paper-input-container id="container" no-label-float="[[noLabelFloat]]" always-float-label="[[alwaysFloatLabel]]" attr-for-value="date" disabled\$="[[disabled]]" invalid="[[invalid]]">
+    <paper-input-container
+        id="container"
+        no-label-float="[[noLabelFloat]]"
+        always-float-label="[[alwaysFloatLabel]]"
+        attr-for-value="date"
+        disabled$="[[disabled]]"
+        invalid="[[invalid]]">
+      <label slot="label" hidden$="[[!label]]">[[label]]</label>
 
-      <label slot="label" hidden\$="[[!label]]">[[label]]</label>
-
-      <date-input class="paper-input-input" id="input" slot="input" aria-label-prefix="[[_ariaLabelledBy]]" required\$="[[required]]" autocomplete\$="[[autocomplete]]" disabled\$="[[disabled]]" invalid="{{invalid}}" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" placeholder\$="[[placeholder]]" readonly\$="[[readonly]]">
+      <date-input
+          class="paper-input-input"
+          id="input"
+          slot="input"
+          aria-label-prefix="[[_ariaLabelledBy]]"
+          required$="[[required]]"
+          autocomplete$="[[autocomplete]]"
+          disabled$="[[disabled]]"
+          invalid="{{invalid}}"
+          autofocus$="[[autofocus]]"
+          inputmode$="[[inputmode]]"
+          placeholder$="[[placeholder]]"
+          readonly$="[[readonly]]"
+          on-date-changed="_onDateChanged">
       </date-input>
 
       <template is="dom-if" if="[[errorMessage]]">
@@ -79,7 +91,7 @@ Polymer({
       </template>
 
     </paper-input-container>
-`,
+  `,
 
   is: 'gold-cc-expiration-input',
 
@@ -92,13 +104,18 @@ Polymer({
     /**
      * The label for this input.
      */
-    label: {type: String, value: 'Expiration Date'},
+    label: {
+      type: String,
+      value: 'Expiration Date',
+    },
 
-    value: {type: String, value: '', observer: '_onValueChanged'}
-
+    value: {
+      type: String,
+      value: '',
+      observer: '_onValueChanged',
+    }
   },
 
-  listeners: {'dateChanged': '_dateChanged'},
   observers: ['_onFocusedChanged(focused)'],
 
   ready: function() {
@@ -109,11 +126,9 @@ Polymer({
   },
 
   created() {
-    // Polymer 2 propagates `autoValidate` earlier in the lifecycle than
-    // in Polymer 1
-    if (PolymerElement) {
-      this.__ignoreAutoValidation = true;
-    }
+    // Polymer 2+ propagates `autoValidate` earlier in the lifecycle than in
+    // Polymer 1
+    this.__ignoreAutoValidation = true;
   },
 
   /**
@@ -121,18 +136,26 @@ Polymer({
    */
   _onValueChanged: function(value, oldValue) {
     // The initial property assignment is handled by `ready`.
-    if (oldValue == undefined) {
+    if (oldValue == undefined && value === '') {
       return;
     }
 
-    this.$.input.month = this._computeMonth(value);
-    this.$.input.year = this._computeYear(value);
+    this.$.input.setProperties({
+      month: this._computeMonth(value),
+      year: this._computeYear(value),
+    });
     this._handleAutoValidate();
   },
 
-  _dateChanged: function(event) {
-    var month = event.detail.month || '';
-    var year = event.detail.year || '';
+  _onDateChanged: function(event) {
+    // date-input's _computeDate gets called on created which is called before
+    // the first __onValueChanged is called
+    if (!this.__firstDateComputeSkipped) {
+      this.__firstDateComputeSkipped = true;
+      return;
+    }
+    var month = event.detail.value.month || '';
+    var year = event.detail.value.year || '';
     var value = year ? (month + '/' + year) : month;
 
     this.value = String(value);
