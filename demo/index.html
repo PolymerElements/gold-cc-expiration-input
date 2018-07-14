@@ -17,9 +17,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <title>gold-cc-expiration-input demo</title>
 
-  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script type="module" src="../gold-cc-expiration-input.js"></script>
-  <script type="module" src="../../paper-styles/demo-pages.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2.0.0/webcomponents-loader.js"></script>
+  <script type="module">
+    import '@polymer/paper-styles/demo-pages.js';
+    import '../gold-cc-expiration-input.js';
+  </script>
 </head>
 <style>
   gold-cc-expiration-input {
@@ -38,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <h4>Pre-validated</h4>
     <div class="vertical-section">
-      <gold-cc-expiration-input auto-validate value="11/15"></gold-cc-expiration-input>
+      <gold-cc-expiration-input auto-validate value="11/22"></gold-cc-expiration-input>
       <gold-cc-expiration-input auto-validate value="31/23"></gold-cc-expiration-input>
       <gold-cc-expiration-input auto-validate value="11/"></gold-cc-expiration-input>
     </div>
