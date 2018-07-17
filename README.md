@@ -1,56 +1,77 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-date-input.html  date-validator.html  gold-cc-expiration-input.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/gold-cc-expiration-input.svg)](https://www.npmjs.com/package/@polymer/gold-cc-expiration-input)
 [![Build status](https://travis-ci.org/PolymerElements/gold-cc-expiration-input.svg?branch=master)](https://travis-ci.org/PolymerElements/gold-cc-expiration-input)
-
-_[Demo and API docs](https://elements.polymer-project.org/elements/gold-cc-expiration-input)_
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/gold-cc-expiration-input)
 
 ##&lt;gold-cc-expiration-input&gt;
 
 `gold-cc-expiration-input` is a  single-line text field with Material Design styling
 for entering a credit card's expiration date
+See: [Documentation](https://www.webcomponents.org/element/@polymer/gold-cc-expiration-input),
+  [Demo](https://www.webcomponents.org/element/@polymer/gold-cc-expiration-input/demo/demo/index.html).
 
-```html
-<gold-cc-expiration-input></gold-cc-expiration-input>
-<gold-cc-expiration-input value="11/15"></gold-cc-expiration-input>
+## Changes in 3.0
+* `date-input` will no longer fire the `dateChanged` event.
+  * Instead listen to the non-bubbling `date-changed` event.
+* Values set delcaratively will be visible.
+
+## Usage
+
+### Installation
+```
+npm install --save @polymer/gold-cc-expiration-input
 ```
 
-It may include an optional label, which by default is "Expiration Date".
-
+### In an html file
 ```html
-<gold-cc-expiration-input label="Date"></gold-cc-expiration-input>
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/gold-cc-expiration-input/gold-cc-expiration-input.js';
+    </script>
+  </head>
+  <body>
+    <gold-cc-expiration-input></gold-cc-expiration-input>
+    <gold-cc-expiration-input value="11/15"></gold-cc-expiration-input>
+    <gold-cc-expiration-input label="Date"></gold-cc-expiration-input>
+  </body>
+</html>
+```
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/gold-cc-expiration-input/gold-cc-expiration-input.js';
+
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <gold-cc-expiration-input></gold-cc-expiration-input>
+      <gold-cc-expiration-input value="11/15"></gold-cc-expiration-input>
+      <gold-cc-expiration-input label="Date"></gold-cc-expiration-input>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
 ```
 
-### Validation
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
 
-The input can check whether the entered date is a valid, future date.
+### Installation
+```sh
+git clone https://github.com/PolymerElements/gold-cc-expiration-input
+cd gold-cc-expiration-input
+npm install
+npm install -g polymer-cli
+```
 
-The input can be automatically validated as the user is typing by using
-the `auto-validate` and `required` attributes. For manual validation, the
-element also has a `validate()` method, which returns the validity of the
-input as well sets any appropriate error messages and styles.
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
 
-See `Polymer.PaperInputBehavior` for more API docs.
-
-### Styling
-
-See `Polymer.PaperInputContainer` for a list of custom properties used to
-style this element.
-
-
-
-<!-- No docs for <date-input> found. -->
-
-<!-- No docs for <date-validator> found. -->
+### Running the tests
+```sh
+polymer test --npm
+```
