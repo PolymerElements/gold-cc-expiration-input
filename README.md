@@ -9,6 +9,11 @@ for entering a credit card's expiration date
 See: [Documentation](https://www.webcomponents.org/element/@polymer/gold-cc-expiration-input),
   [Demo](https://www.webcomponents.org/element/@polymer/gold-cc-expiration-input/demo/demo/index.html).
 
+## Changes in 3.0
+* `date-input` will no longer fire the `dateChanged` event.
+  * Instead listen to the non-bubbling `date-changed` event.
+* Values set delcaratively will be visible.
+
 ## Usage
 
 ### Installation
