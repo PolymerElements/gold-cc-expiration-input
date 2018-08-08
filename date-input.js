@@ -54,8 +54,8 @@ Polymer({
 
     <date-validator id="validator"></date-validator>
 
-    <span aria-hidden="" id="monthLabel" hidden="">Month</span>
-    <span aria-hidden="" id="yearLabel" hidden="">Year</span>
+    <span aria-hidden id="monthLabel" hidden>Month</span>
+    <span aria-hidden id="yearLabel" hidden>Year</span>
 
     <div class="container">
       <iron-input
