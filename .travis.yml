@@ -1,24 +1,28 @@
 language: node_js
 sudo: 'false'
 before_script:
-    - npm install -g polymer-cli
-    - git checkout package-lock.json
-    - >-
-      npm run format && git diff --exit-code || (echo -e '\n\033[31mERROR:\033[0m
-      Project is not formatted. Please run "npm run format".' && false)
+  - npm install -g polymer-cli
+  - git checkout package-lock.json
+  - >-
+    npm run format && git diff --exit-code || (echo -e '\n\033[31mERROR:\033[0m
+    Project is not formatted. Please run "npm run format".' && false)
+  - npm run generate-types
 env:
   global:
-    - secure: QlYwInb+9UWhgtgJttTIYfUoxuO0Q6epXD3/KJ4RnICs71CGv05gGJB18F8LBT9Nv4dY2IGtifaNRCKx76n2FhgZy5ckgEPiNk/AgTKlueI5reCmQ/7Ar0x2i0Zz3CRsuBYGi17/I+sJ0sIXFb+waeUE+5i6NUseZnwz+jlWghRGDqujBaKqpjPsZq0qpbfKbfo1HN8MOl6oW0YrKD/RpuupoJ+pm+eNps91ZBYbd1vUNN+UgvotA0kVkSLToVqV//YUEFp1bUWdqhtD4V07t5cmIYi0zb+MY+2cSLZ566TfE2GFJoxqMYS8BSnaXE0NschKyQmte7Dn2D8uRRykbuntKPaEfZs/4pp9LbiA+Lt5c6wuOJpxq53R43jZZTDzJB9WgL/pg7Cb+nD6kAbt28OxGBV7BGI+FT0Kdo1oIR9GyypisGseQ1Cvuvx4PyWvkNWy8pb3ijvveiXWRUsJrleH1Ki0rXUcnGZcpvtNgVaEnHdZU6Y+HJHfCkMRM/kkva+2+Grc60d2d6gWAFgcrwlCcGp/MfWNO2OWEl2FjaY2gpm9SbtlAUOtLlj0fWGFoZDz/hO5m2RdLO3iwJhS4vi4O456l5tWbZkZg9Egr2FK3LiudQa8diQCFG0e+isGqj4KURt70tCAKWGq8bvTKKAZ7pXE684wZuAqnd/POiA=
-    - secure: bOeosDLMnhzdEtE/6lfITjKqlXre/DfBQtoKllYgLeq2UF6ZRG1lNqVwM+A0F7EmEZ1eBy9EmLP7vzLBUYws/8I1YiQX7IZcI+q+SK14okfLEcKOUOBYjSbpbju09rIe6mVQWqfZoVdprWlYch0epxyEV9pvVak02TQ7vll21su1KLj16x9Sh/BGTbhXkKD3Sij2o4C/tka0+iU+euPTmbcdMyB/IB7O1DClhgHHW0puDONbnjMNV7Kk6wC9lLej2rkGlE2UP9dWYjSntd+8I10u0TkFU0vvjuPdzi9oCdWyC5pz4e7bmn89v55FY8MU02w7SiN6+T9Vh8in5dOE6qyRg7It3Kr7W5CEUDt7afdP7lpnzOOXXcBMh7c4t4X9F0LDnl6tYue1yBAai9jEasJq4K7BYCPTqqRtlzBI5kx/Dkh2ZOYLNsPA448qhq9Nv5So9Cf11P/Lea0webJabny8pcKvp3zr7ZnZJ0LmRn70ERtuoi7I6wYCRgC33iZd0++9G2d8Ils15FaJMGtNDoIrcx6RFtT3Cs+vLUHP4hwxg0Nkl+qaXxrqM3RnNMJbdXKLWZjYq87Aq7Ql9tAelX5V4aYHYWBWFQCOCbF8Yy9yCyrinwkTX7Tge+OLYPG16nFS0n2H04xC/TanR1IkzlXJAZF+wgOEQDbcsxViH5o=
-node_js: 'node'
+    - secure: >-
+        QlYwInb+9UWhgtgJttTIYfUoxuO0Q6epXD3/KJ4RnICs71CGv05gGJB18F8LBT9Nv4dY2IGtifaNRCKx76n2FhgZy5ckgEPiNk/AgTKlueI5reCmQ/7Ar0x2i0Zz3CRsuBYGi17/I+sJ0sIXFb+waeUE+5i6NUseZnwz+jlWghRGDqujBaKqpjPsZq0qpbfKbfo1HN8MOl6oW0YrKD/RpuupoJ+pm+eNps91ZBYbd1vUNN+UgvotA0kVkSLToVqV//YUEFp1bUWdqhtD4V07t5cmIYi0zb+MY+2cSLZ566TfE2GFJoxqMYS8BSnaXE0NschKyQmte7Dn2D8uRRykbuntKPaEfZs/4pp9LbiA+Lt5c6wuOJpxq53R43jZZTDzJB9WgL/pg7Cb+nD6kAbt28OxGBV7BGI+FT0Kdo1oIR9GyypisGseQ1Cvuvx4PyWvkNWy8pb3ijvveiXWRUsJrleH1Ki0rXUcnGZcpvtNgVaEnHdZU6Y+HJHfCkMRM/kkva+2+Grc60d2d6gWAFgcrwlCcGp/MfWNO2OWEl2FjaY2gpm9SbtlAUOtLlj0fWGFoZDz/hO5m2RdLO3iwJhS4vi4O456l5tWbZkZg9Egr2FK3LiudQa8diQCFG0e+isGqj4KURt70tCAKWGq8bvTKKAZ7pXE684wZuAqnd/POiA=
+    - secure: >-
+        bOeosDLMnhzdEtE/6lfITjKqlXre/DfBQtoKllYgLeq2UF6ZRG1lNqVwM+A0F7EmEZ1eBy9EmLP7vzLBUYws/8I1YiQX7IZcI+q+SK14okfLEcKOUOBYjSbpbju09rIe6mVQWqfZoVdprWlYch0epxyEV9pvVak02TQ7vll21su1KLj16x9Sh/BGTbhXkKD3Sij2o4C/tka0+iU+euPTmbcdMyB/IB7O1DClhgHHW0puDONbnjMNV7Kk6wC9lLej2rkGlE2UP9dWYjSntd+8I10u0TkFU0vvjuPdzi9oCdWyC5pz4e7bmn89v55FY8MU02w7SiN6+T9Vh8in5dOE6qyRg7It3Kr7W5CEUDt7afdP7lpnzOOXXcBMh7c4t4X9F0LDnl6tYue1yBAai9jEasJq4K7BYCPTqqRtlzBI5kx/Dkh2ZOYLNsPA448qhq9Nv5So9Cf11P/Lea0webJabny8pcKvp3zr7ZnZJ0LmRn70ERtuoi7I6wYCRgC33iZd0++9G2d8Ils15FaJMGtNDoIrcx6RFtT3Cs+vLUHP4hwxg0Nkl+qaXxrqM3RnNMJbdXKLWZjYq87Aq7Ql9tAelX5V4aYHYWBWFQCOCbF8Yy9yCyrinwkTX7Tge+OLYPG16nFS0n2H04xC/TanR1IkzlXJAZF+wgOEQDbcsxViH5o=
+node_js: node
 addons:
   firefox: latest
   chrome: stable
 script:
   - xvfb-run polymer test --module-resolution=node --npm
-  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --module-resolution=node --npm -s ''default''; fi'
+  - >-
+    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test
+    --module-resolution=node --npm -s 'default'; fi
 dist: trusty
 cache:
   directories:
     - node_modules
-
